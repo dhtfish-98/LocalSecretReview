@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "local-secret-review"
-version = "1.0.0"
+version = "1.0.1"
 description = "Offline, redacted secret exposure review for owned source trees"
 readme = "README.md"
 requires-python = ">=3.10"

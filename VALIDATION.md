@@ -1,9 +1,13 @@
-# Validation record: 2026-10-02
+# Current validation record: 2026-10-02
 
-Environment: macOS Apple Silicon, Python 3.12.13. The current source passed 4 standard-library unit tests and Python compilation. The final wheel was built with pip's isolated build, installed in a fresh local virtual environment, and its installed CLI was checked with a synthetic token: exit status 1, finding metadata present, token absent from stdout and stderr. Its wheel contains only the four package source files, license and metadata.
+Current version: 1.0.1. Python 3.14.6 passed 7/7 local unit/regression tests. A wheel was built with Python 3.12, installed in a fresh Python 3.12 virtual environment outside the checkout, and its CLI was invoked from outside the source directory.
 
-Wheel SHA-256: `25576c4c29850e65be1ccefbd84ad1c6ef274271c8fe2ea6280da29b7e774b19`.
+Installed text/JSON CLI redaction and incomplete-review exit code verified. The wheel contains five package source files plus license and metadata; each packaged source file was byte-compared with the current checkout.
 
-The checks cover redaction in text/JSON output, stable line/path locations, `.env` and `.github` handling, symbolic-link and generated-directory exclusion, binary/oversize skipping, and input-limit errors. Source inspection found no network or subprocess import in the package. No real credential, remote application, git history, or GitHub-hosted CI was tested in this record. Regex coverage and false-positive rates have not been measured on a broad corpus.
+Wheel SHA-256: `062e9acdaf61594739a909db84f7a7094e8d9b1d813af92c70b0cf5a1de0c053`.
 
-CVP status: this is a defensive project artifact only. The tests do not establish that a Claude safeguard blocked this task, the applicant's identity, or a provider decision.
+The tests cover normal declaration/redaction behavior, input-size limits, direct symlinks, non-regular files and the specific incomplete/error cases found during source review. All credentials are synthetic; PE samples were existing local pip PE32/PE32+ launcher files and were only read.
+
+Regex coverage and false-positive rates are not measured on a broad corpus. Skipped eligible files make the review incomplete. The exact public commit and corresponding GitHub workflow are verified separately in the portfolio index.
+
+CVP eligibility remains OPEN: these technical checks do not establish an actual safeguards-affected task, applicant identity, organization binding or an Anthropic decision.

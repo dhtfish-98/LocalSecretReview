@@ -8,7 +8,7 @@ local-secret-review /path/to/your/repository
 local-secret-review /path/to/your/repository --json
 ```
 
-Exit code 0 means no findings, 1 means at least one finding, and 2 means invalid input. A finding is a review prompt; it does not prove a credential is valid, exposed on a server, or exploitable.
+Exit code 0 means a completed review with no findings, 1 means a completed review with findings, and 2 means invalid input or an incomplete review because eligible files were skipped. Finding metadata is still emitted when files are skipped. A finding is a review prompt; it does not prove a credential is valid, exposed on a server, or exploitable.
 
 The scanner examines local `.js`, `.mjs`, `.cjs`, `.jsx`, `.ts`, `.tsx`, `.json`, `.py`, `.toml`, `.yaml`, `.yml`, `.env` and `.env.*` files. It skips symbolic links, common generated/vendor directories, binary files, invalid UTF-8, and files over 1 MiB by default. `--max-bytes` changes the per-file limit up to 16 MiB. It does not search git history or compressed files. An explicitly named regular file is examined regardless of its suffix.
 
@@ -26,3 +26,5 @@ The tests use synthetic local files and check that plain and JSON output never c
 ## Provenance and scope
 
 This is a new, small implementation for offline defensive code review. Its code is separate from the older, attributed SecretCanopy/SecretFinder derivative. See [ORIGIN.md](ORIGIN.md) for the relationship. Use it only on source you own or have permission to inspect. Repository publication and passing tests do not establish CVP eligibility or approval. Anthropic's [CVP guidance](https://support.claude.com/en/articles/14604842-real-time-cyber-safeguards-on-claude-opus-and-sonnet) asks for a legitimate defensive use case affected by cyber safeguards.
+
+Reads are bounded on a regular-file descriptor. Directory traversal errors are reported as errors, and quoted JSON credential keys are included in the literal-assignment rule.

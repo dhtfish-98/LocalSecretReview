@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import re
 from typing import Iterable
+from .local_input import read_local_file
 
 SOURCE_SUFFIXES = {".js", ".mjs", ".cjs", ".jsx", ".ts", ".tsx", ".json", ".py", ".toml", ".yaml", ".yml"}
 IGNORED_DIRS = {".git", ".hg", ".svn", ".mypy_cache", ".pytest_cache", ".ruff_cache", "node_modules", "vendor", "dist", "build", "__pycache__", ".venv", "venv"}
@@ -15,11 +16,11 @@ MAX_ALLOWED_BYTES = 16 * 1_048_576
 
 # Deliberately narrow patterns: a match is a review prompt, not proof of a valid credential.
 RULES = (
-    ("private-key-header", "high", re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----")),
-    ("github-token-shape", "high", re.compile(r"(?<![A-Za-z0-9_])gh[pousr]_[A-Za-z0-9_]{20,}(?![A-Za-z0-9_])")),
+    ("private-key-header", "high", re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH |ENCRYPTED )?PRIVATE KEY-----")),
+    ("github-token-shape", "high", re.compile(r"(?<![A-Za-z0-9_])(?:gh[pousr]_|github_pat_)[A-Za-z0-9_]{20,}(?![A-Za-z0-9_])")),
     ("aws-access-key-shape", "medium", re.compile(r"(?<![A-Z0-9])(?:AKIA|ASIA)[0-9A-Z]{16}(?![A-Z0-9])")),
     ("literal-credential-assignment", "medium", re.compile(
-        r"\b(?:api[_-]?key|access[_-]?token|token|secret|password|passwd)\b\s*[:=]\s*['\"`]?([A-Za-z0-9/+._=-]{12,})",
+        r"\b(?:api[_-]?key|access[_-]?token|token|secret|password|passwd)\b['\"`]?\s*[:=]\s*['\"`]?([A-Za-z0-9/+._=-]{12,})",
         re.IGNORECASE,
     )),
 )
@@ -56,7 +57,10 @@ def _files(root: Path) -> Iterable[tuple[Path, str]]:
         return
     if not root.is_dir():
         raise ValueError("input must be an existing local file or directory")
-    for base, dirs, files in os.walk(root, followlinks=False):
+    def fail(error: OSError) -> None:
+        raise error
+
+    for base, dirs, files in os.walk(root, followlinks=False, onerror=fail):
         dirs[:] = sorted(name for name in dirs if name not in IGNORED_DIRS and not (Path(base) / name).is_symlink())
         for name in sorted(files):
             path = Path(base) / name
@@ -73,15 +77,12 @@ def scan_path(root: str | Path, *, max_bytes: int = DEFAULT_MAX_BYTES) -> ScanRe
     scanned = skipped = 0
     for path, label in _files(source):
         try:
-            if path.stat().st_size > max_bytes:
-                skipped += 1
-                continue
-            content = path.read_bytes()
-            if len(content) > max_bytes or b"\x00" in content:
+            content = read_local_file(path, max_bytes)
+            if b"\x00" in content:
                 skipped += 1
                 continue
             text = content.decode("utf-8")
-        except (OSError, UnicodeError):
+        except (OSError, UnicodeError, ValueError):
             skipped += 1
             continue
         scanned += 1
