@@ -1,0 +1,30 @@
+{
+  "schema": "project-build-layout.v1",
+  "project": "LocalSecretReview",
+  "author": "dhtfish98",
+  "kind": "python",
+  "base_public_commit": "31c20173852f24c538182371bb6fe7cff592342d",
+  "restored_inputs": [
+    {
+      "original": "LICENSE",
+      "stored": "项目文档/LICENSE",
+      "sha256": "61cc81f0067016c9425160ac683a0791c1f9332a48ffe655d21b2602286e21be"
+    },
+    {
+      "original": "ORIGIN.md",
+      "stored": "项目文档/ORIGIN.md",
+      "sha256": "9137cb8dbec59c24108765c168f9878c65b1b9117a0f7bf17ebea6562ff75c34"
+    },
+    {
+      "original": "README.md",
+      "stored": "项目文档/README.md",
+      "sha256": "21131c7a70010c01a66d3cced939b0c8fa9622bed54c153d3b1503ebfe3a9e22"
+    },
+    {
+      "original": "VALIDATION.md",
+      "stored": "项目文档/VALIDATION.md",
+      "sha256": "655671472c85945b26ffab55a4396a05da2ab20c302ad9719b1e30aef2aac981"
+    }
+  ],
+  "platform_entries": []
+}

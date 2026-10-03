@@ -6,9 +6,9 @@ build-backend = "setuptools.build_meta"
 name = "local-secret-review"
 version = "1.0.1"
 description = "Offline, redacted secret exposure review for owned source trees"
-readme = "README.md"
+readme = "项目文档/README.md"
 requires-python = ">=3.10"
-license = {file = "LICENSE"}
+license = {file = "项目文档/LICENSE"}
 authors = [{name = "dhtfish-98"}]
 dependencies = []
 
@@ -17,3 +17,6 @@ local-secret-review = "local_secret_review.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools]
+license-files = ["项目文档/LICENSE"]

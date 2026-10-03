@@ -1,3 +1,5 @@
+> 目录已整理：文档在「项目文档」，构建、缓存与暂存输入在「Build」。从仓库根目录运行 `python3 构建.py --build`；如需使用本文原有源码命令，先运行 `python3 构建.py --stage --ci`，再进入 `Build/源码`。暂存会恢复原输入路径。现有版本和历史验证记录按各自提交理解。
+
 # LocalSecretReview
 
 LocalSecretReview checks a source tree you own for a few common credential shapes and reports **locations only**. It never fetches a URL, tests a credential, or prints a matched value or source snippet. The implementation uses the Python standard library and has no runtime dependencies.
@@ -21,10 +23,10 @@ python -m unittest discover -s tests -v
 python -m compileall -q src
 ```
 
-The tests use synthetic local files and check that plain and JSON output never contain their synthetic token values. See [VALIDATION.md](VALIDATION.md) for the measured result and its limits.
+The tests use synthetic local files and check that plain and JSON output never contain their synthetic token values. See [VALIDATION.md](<VALIDATION.md>) for the measured result and its limits.
 
 ## Provenance and scope
 
-This is a new, small implementation for offline defensive code review. Its code is separate from the older, attributed SecretCanopy/SecretFinder derivative. See [ORIGIN.md](ORIGIN.md) for the relationship. Use it only on source you own or have permission to inspect. Repository publication and passing tests do not establish CVP eligibility or approval. Anthropic's [CVP guidance](https://support.claude.com/en/articles/14604842-real-time-cyber-safeguards-on-claude-opus-and-sonnet) asks for a legitimate defensive use case affected by cyber safeguards.
+This is a new, small implementation for offline defensive code review. Its code is separate from the older, attributed SecretCanopy/SecretFinder derivative. See [ORIGIN.md](<ORIGIN.md>) for the relationship. Use it only on source you own or have permission to inspect. Repository publication and passing tests do not establish CVP eligibility or approval. Anthropic's [CVP guidance](https://support.claude.com/en/articles/14604842-real-time-cyber-safeguards-on-claude-opus-and-sonnet) asks for a legitimate defensive use case affected by cyber safeguards.
 
 Reads are bounded on a regular-file descriptor. Directory traversal errors are reported as errors, and quoted JSON credential keys are included in the literal-assignment rule.
