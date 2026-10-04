@@ -1,8 +1,14 @@
-# Current validation record: 2026-10-02
+# Validation record
 
-Current version: 1.0.1. Python 3.14.6 passed 7/7 local unit/regression tests. A wheel was built with Python 3.12, installed in a fresh Python 3.12 virtual environment outside the checkout, and its CLI was invoked from outside the source directory.
+## v1.0.2 (2026-10-04)
 
-Installed text/JSON CLI redaction and incomplete-review exit code verified. The wheel contains five package source files plus license and metadata; each packaged source file was byte-compared with the current checkout.
+Python 3.14.6 passed 9/9 local unit and regression tests. Two added tests use synthetic local files to verify that a failed stream construction closes an owned descriptor and preserves the original error if the stream constructor already closed it. This verifies local failure paths only; exact public-commit CI is checked separately.
+
+## Historical v1.0.1 record (2026-10-02)
+
+Version: 1.0.1. Python 3.14.6 passed 7/7 local unit/regression tests. A wheel was built with Python 3.12, installed in a fresh Python 3.12 virtual environment outside the checkout, and its CLI was invoked from outside the source directory.
+
+Installed text/JSON CLI redaction and incomplete-review exit code verified. The wheel contains five package source files plus license and metadata; each packaged source file was byte-compared with the v1.0.1 checkout.
 
 Wheel SHA-256: `062e9acdaf61594739a909db84f7a7094e8d9b1d813af92c70b0cf5a1de0c053`.
 
