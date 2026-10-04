@@ -1,5 +1,11 @@
 # Validation record
 
+## v1.0.3 (2026-10-04)
+
+The package author and this project's MIT copyright display name were normalized to `dhtfish98`; executable source is unchanged from v1.0.2. Python 3.12.13 installed a wheel built from the staged source, and all 9/9 local tests passed. Installed package metadata reports version `1.0.3` and author `dhtfish98`. The wheel contains five source files byte-identical to this checkout and the current MIT license text.
+
+These are local packaging and test checks; public commit, CI, tag and Release status must be checked against GitHub separately.
+
 ## v1.0.2 (2026-10-04)
 
 Python 3.14.6 passed 9/9 local unit and regression tests. Two added tests use synthetic local files to verify that a failed stream construction closes an owned descriptor and preserves the original error if the stream constructor already closed it. This verifies local failure paths only; exact public-commit CI is checked separately.
